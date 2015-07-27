@@ -67,9 +67,9 @@ class DjinnServiceHandler : virtual public IPAServiceIf {
   DjinnServiceHandler() {
     // Your initialization goes here
     this->SERVICE_NAME = SERVICE_TYPE;
-    this->SCHEDULER_IP = "localhost:8000";
+    this->SCHEDULER_IP = "localhost";
     this->SCHEDULER_PORT = 8888;
-    this->SERVICE_IP = "localhost:8000";
+    this->SERVICE_IP = "localhost";
     this->SERVICE_PORT = 7071;
   }
 
@@ -122,7 +122,6 @@ class DjinnServiceHandler : virtual public IPAServiceIf {
   }
 
   void initialize(po::variables_map vm) {
-    
     this->SERVICE_PORT      = vm["port"].as<int>();
     this->SERVICE_IP        = vm["svip"].as<string>();
     this->SCHEDULER_PORT    = vm["ccport"].as<int>();
@@ -260,9 +259,9 @@ po::variables_map parse_opts(int ac, char** av) {
           "Service port number")
       ("ccport,c", po::value<int>()->default_value(8888),
           "Command Center port number")
-      ("ccip,i", po::value<string>()->default_value("141.212.106.68"),
+      ("ccip,i", po::value<string>()->default_value("localhost"),
           "Command Center IP address")
-      ("svip,s", po::value<string>()->default_value("141.212.106.68"),
+      ("svip,s", po::value<string>()->default_value("localhost"),
           "Service IP address")
       ("common,m", po::value<string>()->default_value("../tonic-common/"),
           "Directory with configs and weights")
