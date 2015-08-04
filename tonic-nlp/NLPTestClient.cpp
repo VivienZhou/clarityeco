@@ -52,7 +52,9 @@ bool debug;
 int main(int argc, char ** argv){
     string CC_SERVICE_IP = "141.212.106.68";
     int CC_SERVICE_PORT = 8888;
-
+	string CC_SERVICE_IP;
+	int CC_SERVICE_PORT;
+    
     ServiceTypes svt;
 
     try{
@@ -67,17 +69,17 @@ int main(int argc, char ** argv){
    	 	vector<string> tags;
         string input = "common-nlp/input/small-input.txt";
         for (int i = 1; i < argc; i++){
-            if ((argv[i] == "--input")||(argv[i] == "-i")){
+        	string str = argv[i];
+            if (str == "--input"){
                 input = argv[++i];
                 continue;
-            }else if ((argv[i] == "--ccip")){
+            }else if (str == "--ccip"){
                 CC_SERVICE_IP = argv[++i];
                 continue;
-            }else if ((argv[i] == "--ccport")){
+            }else if (str == "--ccport"){
                 CC_SERVICE_PORT = std::atoi(argv[++i]);
                 continue;
             }
-
             tags.push_back(argv[i]);
         }
 

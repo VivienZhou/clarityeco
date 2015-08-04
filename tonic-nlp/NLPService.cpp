@@ -127,8 +127,8 @@ class SennaServiceHandler : public IPAServiceIf {
 			// 1. register to the command center
 			this->SERVICE_PORT = vm["port"].as<int>();
 			this->SERVICE_IP = vm["svip"].as<string>();
-   			this->SCHEDULER_PORT = vm["ccport"].as<int>();
-    		this->SCHEDULER_IP = vm["ccip"].as<string>();
+   		this->SCHEDULER_PORT = vm["ccport"].as<int>();
+    	this->SCHEDULER_IP = vm["ccip"].as<string>();
     		
 			TClient tClient;
 			this->scheduler_client = tClient.creatSchedulerClient(this->SCHEDULER_IP, this->SCHEDULER_PORT);
@@ -572,7 +572,7 @@ int main(int argc, char **argv){
     po::variables_map vm = parse_opts(argc, argv);
 
     int port = vm["port"].as<int>();
-    LOG(INFO) << "Command center port not specified; using default " <<port;
+    LOG(INFO) << "NLP Service using port:" <<port;
 
     SennaServiceHandler *SennaService = new SennaServiceHandler();
     boost::shared_ptr<SennaServiceHandler> handler(SennaService);
