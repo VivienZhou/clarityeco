@@ -50,8 +50,6 @@ bool debug;
 
 
 int main(int argc, char ** argv){
-    string CC_SERVICE_IP = "141.212.106.68";
-    int CC_SERVICE_PORT = 8888;
 	string CC_SERVICE_IP;
 	int CC_SERVICE_PORT;
     
