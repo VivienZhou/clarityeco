@@ -353,8 +353,6 @@ class SennaServiceHandler : public IPAServiceIf {
        	for (int i = 0; i < app.pl.num * pos->output_state_size; i++){
         	float temp;
           cin>>temp;
-          //cin>>buff;
-        	//float temp = boost::lexical_cast<float>(buff);
         	*(pos->output_state + i) = temp;
       	} 
 
