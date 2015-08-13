@@ -289,16 +289,17 @@ class SennaServiceHandler : public IPAServiceIf {
         	NER_handler();
       	}
 
-      	for (int i = 0; i < tokens->n; i++) {
-        	printf("%15s", tokens->words[i]);
-        	if (app.task == "pos"){
-          		printf("\t%10s", SENNA_Hash_key(pos_hash, pos_labels[i]));
-       		}else if (app.task == "chk")
-          		printf("\t%10s", SENNA_Hash_key(chk_hash, chk_labels[i]));
-        	else if (app.task == "ner")
-          		printf("\t%10s", SENNA_Hash_key(ner_hash, ner_labels[i]));
-        	printf("\n");
-     	}
+        ostringstream oss;
+        for (int i = 0; i < tokens->n; i++) {
+          oss<<setw(15) << tokens->words[i];
+          if (app.task == "pos"){
+              oss<<setw(10) << SENNA_Hash_key(pos_hash, pos_labels[i]);
+          }else if (app.task == "chk")
+              oss<<setw(10) << SENNA_Hash_key(chk_hash, chk_labels[i]);
+          else if (app.task == "ner")
+              oss<<setw(10) << SENNA_Hash_key(ner_hash, ner_labels[i]);
+          oss<< "\n";
+        }
 
       	// clean up
       	SENNA_Tokenizer_free(tokenizer);
@@ -324,8 +325,10 @@ class SennaServiceHandler : public IPAServiceIf {
        	if (!app.djinn){
         	free(app.net);
        	}
-       	printf("senna_all complete\n");
-       	string str = "finish SENNA";
+       	LOG(INFO) << "senna_all complete\n";
+        string str = "\n";
+        str += oss.str();
+       	str += "\nfinish NLP Service\n";
        	return str;
 	}
 
@@ -349,8 +352,8 @@ class SennaServiceHandler : public IPAServiceIf {
         istringstream cin(out_string);
       	string buff;
        	for (int i = 0; i < app.pl.num * pos->output_state_size; i++){
-        	cin>>buff;
-        	float temp = boost::lexical_cast<float>(buff);
+        	float temp;
+          cin>>temp;
         	*(pos->output_state + i) = temp;
       	} 
 
@@ -400,8 +403,8 @@ class SennaServiceHandler : public IPAServiceIf {
         istringstream cin(out_string);
         string buff;
         for (int i = 0; i < pos_app.pl.num * pos->output_state_size; i++){
-        	  cin>>buff;
-          	float temp = boost::lexical_cast<float>(buff);
+            float temp;
+            cin>>temp;
           	*(pos->output_state + i) = temp;
         } 
 
@@ -428,9 +431,9 @@ class SennaServiceHandler : public IPAServiceIf {
         istringstream cin(out_string);
         string buff;
         for (int i = 0; i < app.pl.num * chk->output_state_size; i++){
-           	cin>>buff;
-         	float temp = boost::lexical_cast<float>(buff);
-          	*(chk->output_state + i) = temp;
+          float temp;
+          cin>>temp;
+          *(chk->output_state + i) = temp;
         } 
 
         chk->labels = SENNA_realloc(chk->labels, sizeof(int), app.pl.num);
@@ -464,8 +467,8 @@ class SennaServiceHandler : public IPAServiceIf {
         istringstream cin(out_string);
         string buff;
         for (int i = 0; i < app.pl.num * ner->output_state_size; i++){
-           	cin>>buff;
-          	float temp = boost::lexical_cast<float>(buff);
+            float temp;
+            cin>>temp;
           	*(ner->output_state + i) = temp;
         } 
 
