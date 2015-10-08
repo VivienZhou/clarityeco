@@ -1,0 +1,3 @@
+src/chickadee.jpg
+src/great_grey_owl.jpg
+src/agama.jpg
